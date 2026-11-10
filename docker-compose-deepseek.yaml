@@ -1,0 +1,42 @@
+services:
+  open-webui:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ghcr.io/open-webui/open-webui:${WEBUI_DOCKER_TAG-main}
+    container_name: open-webui
+    volumes:
+      - open-webui:/app/backend/data
+    ports:
+      - ${OPEN_WEBUI_PORT-3000}:8080
+    environment:
+      WEBUI_SECRET_KEY: ${WEBUI_SECRET_KEY:?Set WEBUI_SECRET_KEY in .env}
+      OPENAI_API_BASE_URLS: https://api.deepseek.com/v1
+      OPENAI_API_KEYS: ${OPENAI_API_KEYS:?Set OPENAI_API_KEYS in .env}
+      ENABLE_TOOL_SERVERS: "true"
+      TERMINAL_SERVER_CONNECTIONS: >-
+        [
+          {
+            "id": "open-terminal",
+            "name": "Open Terminal",
+            "url": "https://terminal-02.dentsusoken.id",
+            "enabled": true,
+            "key": "${OPEN_TERMINAL_API_KEY:?Set OPEN_TERMINAL_API_KEY in .env}",
+            "auth_type": "bearer"
+          }
+        ]
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    restart: unless-stopped
+
+  open-terminal:
+    image: ghcr.io/open-webui/open-terminal
+    container_name: open-terminal
+    volumes:
+      - open-terminal:/home/user
+    environment:
+      OPEN_TERMINAL_API_KEY: ${OPEN_TERMINAL_API_KEY:?Set OPEN_TERMINAL_API_KEY in .env}
+
+volumes:
+  open-webui: {}
+  open-terminal: {}
