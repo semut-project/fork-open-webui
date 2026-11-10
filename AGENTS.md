@@ -2,6 +2,8 @@
 Version: 1.0
 ---
 
+Ini adalah fork dari Open WebUI project.
+
 ## Governing Rule
 
 - Do not surface a consideration merely because it is relevant. Surface it only if it can change the decision, implementation, or risk.

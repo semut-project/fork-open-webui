@@ -8,7 +8,7 @@ services:
     volumes:
       - open-webui:/app/backend/data
     ports:
-      - ${OPEN_WEBUI_PORT-3000}:8080
+      - ${OPEN_WEBUI_PORT-3002}:8080
     environment:
       WEBUI_SECRET_KEY: ${WEBUI_SECRET_KEY:?Set WEBUI_SECRET_KEY in .env}
       OPENAI_API_BASE_URLS: https://api.deepseek.com/v1
@@ -34,6 +34,8 @@ services:
     container_name: open-terminal
     volumes:
       - open-terminal:/home/user
+    ports:
+      - ${OPEN_TERMINAL_PORT-8082}:8080
     environment:
       OPEN_TERMINAL_API_KEY: ${OPEN_TERMINAL_API_KEY:?Set OPEN_TERMINAL_API_KEY in .env}
 
