@@ -1898,6 +1898,15 @@ def get_reasoning_format(model: dict) -> str | None:
         return 'thinking'
     if provider == 'llama.cpp':
         return 'reasoning_content'
+    # DeepSeek and MiMo thinking-mode APIs require assistant reasoning to be
+    # echoed in subsequent Chat Completions requests. Their OpenAI-compatible
+    # models may be registered through the generic ``openai`` provider, so
+    # identify them by the model id/name as well.
+    model_identifiers = ' '.join(
+        str(model.get(key) or '') for key in ('id', 'name', 'model')
+    ).lower()
+    if any(provider_name in model_identifiers for provider_name in ('deepseek', 'mimo')):
+        return 'reasoning_content'
     return None
 
 
