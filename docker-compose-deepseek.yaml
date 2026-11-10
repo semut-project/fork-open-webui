@@ -19,7 +19,7 @@ services:
           {
             "id": "open-terminal",
             "name": "Open Terminal",
-            "url": "https://terminal-02.dentsusoken.id",
+            "url": "http://localhost:3002",
             "enabled": true,
             "key": "${OPEN_TERMINAL_API_KEY:?Set OPEN_TERMINAL_API_KEY in .env}",
             "auth_type": "bearer"
